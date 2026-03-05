@@ -1390,15 +1390,15 @@
       if (subscribeBtn && subscriptionPopup) {
         subscribeBtn.addEventListener("click", function() {
           const email = newsletterInput.value.trim();
-          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
           
           if(email === "") {
             alert("Please enter your email address.");
             return;
           }
           
-          if(!emailPattern.test(email)) {
-            alert("Please enter a valid email address (e.g., name@example.com).");
+          if(!emailRegex.test(email)) {
+            alert("Please enter a valid email address (e.g., name@gmail.com).");
             return;
           }
           

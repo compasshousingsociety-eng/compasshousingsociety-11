@@ -953,8 +953,8 @@
                     
                     <form id="loginForm">
                       <div class="form-group">
-                        <label for="email" class="form-label">Email Address (Gmail only)</label>
-                        <input type="email" id="email" class="form-control" placeholder="Enter your Gmail address (e.g., name@gmail.com)" required>
+                        <label for="email" class="form-label">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email address (e.g., name@gmail.com)" required>
                       </div>
                       
                       <div class="form-group">
@@ -1155,15 +1155,15 @@
           
           const email = document.getElementById("email").value.trim();
           const password = document.getElementById("password").value;
-          const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
           
           if (!email || !password) {
             alert("Please enter both email and password.");
             return;
           }
           
-          if (!gmailPattern.test(email)) {
-            alert("Please enter a valid Gmail address (e.g., name@gmail.com).");
+          if (!emailRegex.test(email)) {
+            alert("Please enter a valid email address (e.g., name@gmail.com).");
             return;
           }
           

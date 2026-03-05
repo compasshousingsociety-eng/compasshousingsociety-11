@@ -1500,7 +1500,7 @@
             <h2 class="newsletter-title">Stay Updated with Real Estate Insights</h2>
             <p class="newsletter-text">Subscribe to our newsletter for weekly updates on market trends, investment strategies, and expert advice from Compass Housing Society professionals.</p>
             <div class="newsletter-form">
-              <input type="email" id="newsletterEmail" placeholder="Enter your Gmail address (e.g., name@gmail.com)" required>
+              <input type="email" id="newsletterEmail" placeholder="Enter your email address (e.g., name@gmail.com)" required>
               <button class="btn-subscribe btn-animated" type="button" id="subscribeBtn">Subscribe</button>
             </div>
           </div>
@@ -1721,15 +1721,15 @@
       if (subscribeBtn && subscriptionPopup) {
         subscribeBtn.addEventListener("click", function() {
           const email = newsletterInput.value.trim();
-          const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+          const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
           
           if(email === "") {
             alert("Please enter your email address.");
             return;
           }
           
-          if(!gmailPattern.test(email)) {
-            alert("Please enter a valid Gmail address (e.g., name@gmail.com).");
+          if(!emailRegex.test(email)) {
+            alert("Please enter a valid email address (e.g., name@gmail.com).");
             return;
           }
           

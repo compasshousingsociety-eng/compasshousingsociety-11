@@ -892,7 +892,7 @@
                       <div class="form-group">
                         <label for="email" class="form-label">Email Address</label>
                         <input type="email" id="email" class="form-control" placeholder="Enter your email address" required>
-                        <div class="error-message" id="emailError">Email must be a valid @gmail.com address</div>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
                       </div>
                       <div class="form-group">
                         <label for="phone" class="form-label">Phone Number</label>
@@ -1139,9 +1139,9 @@
 
       function validateEmail() {
         const value = stripSpaces(emailInput.value);
-        // Strict validation: must end with @gmail.com (case insensitive)
-        const gmailRegex = /^[^\s@]+@gmail\.com$/i;
-        if (!gmailRegex.test(value)) {
+        // Standard email validation: allow any valid domain
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
+        if (!emailRegex.test(value)) {
           emailError.style.display = "block";
           return false;
         } else {
