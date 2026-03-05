@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Login - Compass Housing Society</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #6A0DAD;
+      --light: #FFFFFF;
+      --dark: #000000;
+      --accent: #90EE90;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui;
+      color: var(--dark);
+      background: var(--light);
+    }
+
+    h1 { font-size: 46px; line-height: 1.2; font-weight: 800; }
+    h2 { font-size: 36px; line-height: 1.3; }
+    h3 { font-size: 24px; line-height: 1.4; }
+    h4, h5, h6 { font-size: 20px; line-height: 1.4; }
+    li, span, p { font-size: 18px; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; padding-left: 0; margin-bottom: 0; }
+
+    .text-muted { color: rgba(0, 0, 0, 0.7) !important; }
+    body.dark-mode .text-muted { color: rgba(255, 255, 255, 0.87) !important; }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("Images/transparent-logo.jpeg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 570px auto;
+      opacity: 0.10;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body.dark-mode::after {
+      opacity: 0.08;
+    }
+
+    .page-wrapper {
+      max-width: 1920px;
+      margin: 0 auto;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding-top: 82px;
+    }
+
+    .content-layer { position: relative; z-index: 1; }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: var(--primary);
+      padding: 12px 40px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55);
+    }
+
+    body.dark-mode header,
+    body.dark-mode .site-footer {
+      background: #000000;
+    }
+
+    .navbar-custom { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 24px; 
+      position: relative;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--light);
+    }
+
+    body.dark-mode .brand {
+      color: #ffffff;
+    }
+
+    .brand img { width: 58px; height: auto; object-fit: contain; border-radius: 0; border: none; opacity: 0.97; background: transparent; }
+
+    .nav-menu { 
+      display: flex; 
+      align-items: center; 
+      gap: 24px; 
+      flex: 1; 
+      justify-content: center; 
+      flex-wrap: wrap; 
+    }
+    
+    .nav-item { position: relative; }
+    .nav-link-custom {
+      color: var(--light);
+      padding: 4px 0;
+      opacity: 0.9;
+      position: relative;
+      cursor: pointer;
+      display: inline-block;
+      transition: color 0.25s ease, opacity 0.25s ease;
+    }
+
+    body.dark-mode .nav-link-custom {
+      color: #ffffff;
+    }
+
+    .nav-link-custom::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0%;
+      height: 2px;
+      background-color: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav-link-custom:hover::after { width: 100%; }
+    .dropdown-toggle-custom::after { content: " ▾"; position: static; width: auto; height: auto; background: none; margin-left: 4px; }
+
+    .dropdown-menu-custom {
+      position: absolute;
+      left: 0;
+      top: calc(100% + 6px);
+      background-color: var(--dark);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      min-width: 190px;
+      display: none;
+      padding: 6px 0;
+      z-index: 120;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    body.dark-mode .dropdown-menu-custom {
+      background: #1a1a1a;
+    }
+
+    .dropdown-menu-custom li a {
+      display: block;
+      padding: 8px 18px;
+      color: var(--light);
+      white-space: nowrap;
+      opacity: 0.9;
+      transition: background-color 0.25s ease, opacity 0.25s ease, color 0.25s ease;
+    }
+
+    .dropdown-menu-custom li a:hover { background-color: rgba(106, 13, 173, 0.25); opacity: 1; color: var(--accent); }
+    .nav-item.dropdown.open>.dropdown-menu-custom { display: block; }
+
+    .nav-actions { 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      margin-left: auto; 
+    }
+    
+    .btn-animated { 
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease; 
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45); 
+    }
+    
+    .btn-animated:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.7); 
+      filter: brightness(0.96); 
+    }
+
+    .btn-login {
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+      padding-inline: 10px;
+    }
+
+    body.dark-mode .btn-login {
+      background: var(--accent);
+      color: #000000;
+    }
+
+    .mode-toggle {
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 999px;
+      padding: 3px 6px;
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+      color: var(--light);
+      background: transparent;
+    }
+
+    body.dark-mode .mode-toggle {
+      border-color: #ffffff;
+      color: #ffffff;
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--light);
+      background: transparent;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      color: var(--light);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-left: 10px;
+    }
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .nav-overlay.active { opacity: 1; pointer-events: auto; }
+
+    @media (max-width: 1030px) {
+      header { padding: 10px 16px; }
+      .navbar-custom { 
+        gap: 10px; 
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      
+      .brand {
+        order: 1;
+        flex: 1;
+      }
+      
+      .nav-actions {
+        order: 2;
+        margin-left: 0;
+        justify-content: flex-end;
+      }
+      
+      .menu-toggle {
+        display: inline-flex;
+        order: 3;
+        margin-left: 10px;
+      }
+      
+      .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -280px;
+        height: 100vh;
+        width: 280px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        background: var(--dark);
+        padding: 80px 20px 40px;
+        border-radius: 16px 0 0 16px;
+        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.85);
+        z-index: 110;
+        gap: 12px;
+        transition: right 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        overflow-y: auto;
+        justify-content: flex-start;
+      }
+
+      .nav-menu.nav-open { right: 0; }
+      .nav-item { width: 100%; }
+      .nav-link-custom { width: 100%; padding: 10px 0; }
+      .dropdown-menu-custom { 
+        position: static; 
+        margin-top: 4px; 
+        background: transparent; 
+        border-radius: 0; 
+        border: none; 
+        box-shadow: none; 
+        padding: 0 0 4px 10px; 
+        display: none;
+      }
+      
+      .dropdown-menu-custom li a { padding: 8px 0; font-size: 15px; opacity: 0.85; }
+      .nav-item.dropdown.open>.dropdown-menu-custom { display: block; }
+      
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+
+    .login-section {
+      padding: 60px 30px;
+      min-height: calc(100vh - 300px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    
+    .login-container {
+      max-width: 800px;
+      width: 100%;
+      margin: 0 auto;
+      /* card background removed: now transparent */
+      background: transparent;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    body.dark-mode .login-container {
+      background: transparent;
+    }
+
+    .login-hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #8A2BE2 100%);
+      color: var(--light);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-hero h1 {
+      font-size: 36px;
+      margin-bottom: 20px;
+      color: var(--light);
+      font-weight: bold;
+    }
+
+    .login-hero p {
+      opacity: 0.9;
+      margin-bottom: 30px;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+
+    .feature-list li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .feature-list li::before {
+      content: "✓";
+      background: var(--accent);
+      color: var(--dark);
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .login-form-container {
+      padding: 40px;
+      /* no background, inherit transparent */
+      background: transparent;
+    }
+
+    .login-form h2 {
+      color: var(--primary);
+      margin-bottom: 30px;
+      text-align: center;
+      font-weight: bold;
+    }
+    
+    body.dark-mode .login-form h2 {
+      color: var(--accent);
+    }
+
+    .form-group {
+      margin-bottom: 24px;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: var(--dark);
+    }
+
+    body.dark-mode .form-label {
+      color: var(--light);
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 14px 18px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      font-size: 16px;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease;
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    body.dark-mode .form-control {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: var(--light);
+    }
+
+    .form-control::placeholder {
+      color: rgba(0, 0, 0, 0.5);
+    }
+
+    body.dark-mode .form-control::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.1);
+    }
+
+    body.dark-mode .form-control:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(144, 238, 144, 0.1);
+    }
+
+    .form-options {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .form-check {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-check-input {
+      width: 18px;
+      height: 18px;
+      accent-color: var(--primary);
+    }
+
+    .form-check-label {
+      font-size: 16px;
+      color: var(--dark);
+    }
+
+    body.dark-mode .form-check-label {
+      color: var(--light);
+    }
+
+    .forgot-password {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: underline;
+      transition: color 0.25s ease;
+    }
+
+    body.dark-mode .forgot-password {
+      color: var(--accent);
+    }
+
+    .forgot-password:hover {
+      color: var(--accent);
+    }
+
+    body.dark-mode .forgot-password:hover {
+      color: var(--primary);
+    }
+
+    .form-actions {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .login-btn {
+      width: 50%;
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      padding: 16px;
+      border-radius: 999px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+      box-shadow: 0 6px 16px rgba(144, 238, 144, 0.4);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 26px rgba(144, 238, 144, 0.6);
+      filter: brightness(1.1);
+    }
+
+    .register-link {
+      text-align: center;
+      margin-top: 24px;
+      color: var(--dark);
+    }
+
+    body.dark-mode .register-link {
+      color: var(--light);
+    }
+
+    .register-link a {
+      color: var(--primary);
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    .register-link a:hover {
+      color: var(--accent);
+    }
+
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 30px 0;
+    }
+
+    .divider::before,
+    .divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    body.dark-mode .divider::before,
+    body.dark-mode .divider::after {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .divider span {
+      padding: 0 15px;
+      color: var(--dark);
+    }
+
+    body.dark-mode .divider span {
+      color: var(--light);
+    }
+
+    .social-login {
+      display: flex;
+      gap: 15px;
+      margin-top: 20px;
+    }
+
+    .social-btn {
+      flex: 1;
+      padding: 12px;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+      border-radius: 10px;
+      background: var(--light);
+      color: var(--dark);
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.25s ease, transform 0.25s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    body.dark-mode .social-btn {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--light);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .social-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .social-btn.google {
+      background: #fff;
+      color: #333;
+    }
+
+    body.dark-mode .social-btn.google {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--light);
+    }
+
+    .social-btn.facebook {
+      background: #1877F2;
+      color: #fff;
+      border-color: #1877F2;
+    }
+
+    .site-footer {
+      background: var(--primary);
+      color: var(--light);
+      padding: 50px 0 18px;
+      font-size: 14px;
+      border-top: none;
+    }
+
+    .footer-brand-title {
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--light);
+    }
+
+    .footer-brand-title span.icon { font-size: 20px; margin-bottom: 10px; }
+    .footer-text { 
+      color: var(--light); 
+      margin-bottom: 10px; 
+      max-width: 260px; 
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .footer-label { font-weight: 700; }
+    .footer-contact-line { 
+      margin-bottom: 4px; 
+      text-align: center;
+    }
+    
+    .footer-socials { 
+      display: flex; 
+      gap: 12px; 
+      margin-top: 14px; 
+      justify-content: center;
+    }
+    
+    section { padding: 30px; }
+    
+    .footer-social { 
+      width: 36px; 
+      height: 36px; 
+      border-radius: 50%; 
+      border: 1px solid var(--light); 
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease; 
+      color: var(--light);
+      font-size: 16px;
+    }
+    
+    .footer-social:hover { 
+      transform: translateY(-3px); 
+      border-color: var(--accent); 
+    }
+    
+    .footer-facebook:hover { background-color: #1877F2; color: white; }
+    .footer-google:hover { background-color: #DB4437; color: white; }
+    .footer-youtube:hover { background-color: #FF0000; color: white; }
+    
+    .footer-column-title { 
+      font-weight: 800; 
+      margin-bottom: 10px; 
+      color: var(--light); 
+      text-align: center;
+    }
+    
+    body.dark-mode .footer-column-title {
+      color: #ffffff;
+    }
+    
+    .footer-links li { 
+      margin-bottom: 4px; 
+      color: var(--light); 
+      transition: color 0.25s ease;
+      text-align: center;
+    }
+    
+    .footer-links li a { color: inherit; }
+    .footer-links li a:hover { color: var(--accent); }
+    
+    .footer-causes-grid { 
+      display: grid; 
+      grid-template-columns: repeat(3, minmax(0, 1fr)); 
+      gap: 6px; 
+      margin-top: 10px; 
+    }
+    
+    .footer-causes-grid img { 
+      width: 100%; 
+      height: 55px; 
+      border-radius: 8px; 
+      object-fit: cover; 
+      transition: transform 0.25s ease, box-shadow 0.25s ease; 
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35); 
+    }
+    
+    .footer-causes-grid img:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4); 
+    }
+    
+    .footer-bottom { 
+      margin-top: 26px; 
+      text-align: center; 
+      color: var(--light); 
+      font-size: 18px; 
+      width: 100%;
+    }
+
+    body.dark-mode {
+      background: #000000;
+      color: #ffffff;
+    }
+
+    @media (max-width: 1200px) {
+      header { padding-inline: 24px; }
+    }
+
+    @media (max-width: 992px) {
+      .login-container {
+        flex-direction: column;
+      }
+      
+      .login-hero, .login-form-container {
+        width: 100%;
+      }
+      
+      .social-login {
+        flex-direction: column;
+      }
+      
+      .login-btn {
+        width: 70%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-wrapper { padding-top: 70px; }
+      .login-section {
+        padding: 40px 20px;
+      }
+      
+      .login-hero h1 {
+        font-size: 28px;
+      }
+      
+      .login-form h2 {
+        font-size: 24px;
+      }
+      
+      .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+      }
+      
+      .login-btn {
+        width: 80%;
+      }
+      
+      .footer-grid { 
+        text-align: center !important;
+      }
+      
+      .footer-links {
+        text-align: center !important;
+      }
+      
+      .footer-contact-line {
+        text-align: center !important;
+      }
+      
+      .footer-text {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .login-hero, .login-form-container {
+        padding: 30px 20px;
+      }
+      
+      .nav-actions {
+        position: relative;
+        right: 0;
+        top: 0;
+      }
+      
+      .menu-toggle {
+        position: relative;
+        z-index: 120;
+      }
+      
+      .brand span {
+        font-size: 14px;
+      }
+      
+      .brand img {
+        width: 40px;
+      }
+      
+      .footer-causes-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      
+      .login-btn {
+        width: 100%;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .footer-causes-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 350px) {
+      .brand span {
+        display: none;
+      }
+      
+      .brand {
+        gap: 5px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <div class="content-layer">
+      <div class="nav-overlay"></div>
+
+      <header>
+        <nav class="navbar-custom">
+          <div class="brand">
+            <img src="Images/logo.jpeg" alt="Compass Housing Society Logo">
+            <span>Compass Housing<br> Society</span>
+          </div>
+
+          <ul class="nav-menu">
+            <li class="nav-item dropdown">
+              <span class="nav-link-custom dropdown-toggle-custom">Home</span>
+              <ul class="dropdown-menu-custom">
+                <li><a href="index.html">Home -1</a></li>
+                <li><a href="Home2.html">Home -2</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <span class="nav-link-custom dropdown-toggle-custom">Services List</span>
+              <ul class="dropdown-menu-custom">
+                <li><a href="services.html">Services Page</a></li>
+                <li><a href="servicedetails.html">Services Details Page</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <span class="nav-link-custom dropdown-toggle-custom">Blog Design</span>
+              <ul class="dropdown-menu-custom">
+                <li><a href="blog.html">Blog Page</a></li>
+                <li><a href="blogdetails.html">Blog Details Page</a></li>
+                <li><a href="maintanancepage.html"> Additional Pages</a>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a href="aboutus.html" class="nav-link-custom">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="contactus.html" class="nav-link-custom">Contact Us</a>
+            </li>
+          </ul>
+
+          <div class="nav-actions">
+            <button class="mode-toggle" type="button" aria-label="Toggle dark / light mode">
+              <span class="mode-icon">🌙</span>
+            </button>
+            <a href="register.html">
+              <button class="btn-login btn-animated" type="button">Register</button>
+            </a>
+            <button class="menu-toggle" type="button" aria-label="Toggle menu">☰</button>
+          </div>
+        </nav>
+      </header>
+
+      <section class="login-section">
+        <div class="container">
+          <div class="login-container">
+            <div class="row g-0">
+              <div class="col-lg-6">
+                <div class="login-hero">
+                  <h1>Welcome Back to Compass Housing</h1>
+                  <p>Sign in to your account to manage your property portfolio, schedule site visits, get personalized recommendations, and track your application status.</p>
+                  
+                  <ul class="feature-list">
+                    <li>Access your saved properties</li>
+                    <li>Schedule or reschedule site visits</li>
+                    <li>Get personalized property recommendations</li>
+                    <li>Track your application progress</li>
+                    <li>Connect with your property advisor</li>
+                    <li>Receive exclusive member-only updates</li>
+                  </ul>   
+                </div>
+              </div>
+              
+              <div class="col-lg-6">
+                <div class="login-form-container">
+                  <div class="login-form">
+                    <h2>Sign In to Your Account</h2>
+                    
+                    <form id="loginForm">
+                      <div class="form-group">
+                        <label for="email" class="form-label">Email Address (Gmail only)</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your Gmail address (e.g., name@gmail.com)" required>
+                      </div>
+                      
+                      <div class="form-group">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Enter your password" required>
+                      </div>
+                      
+                      
+                      <div class="form-actions">
+                        <button type="submit" class="login-btn btn-animated">Sign In</button>
+                      </div>
+                      
+                      <div class="divider">
+                        <span>Or continue with</span>
+                      </div>
+                      
+                      
+                      
+                      <div class="register-link">
+                        Don't have an account? <a href="register.html">Register here</a>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer" id="contact">
+        <div class="container">
+          <div class="footer-inner">
+            <div class="row footer-grid g-4">
+              <div class="col-md-4">
+                <div class="footer-brand-title">
+                  <span class="icon">🏠</span>
+                  <h4 class="footer-column-title">Compass Housing</h4>
+                </div>
+                <p class="footer-text">
+                  Compass Housing Society creates master-planned communities.              
+                </p>
+                <p class="footer-contact-line">
+                  <span class="footer-label">Phone:</span> +91-98765-43210
+                </p>
+                <p class="footer-contact-line">
+                  <span class="footer-label">Address:</span> Compass Square, Financial District<br>
+                  Your City, Country 500001
+                </p>
+
+                <div class="footer-socials">
+                  <a href="http://www.facebook.com" class="footer-social footer-facebook" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="http://www.google.com" class="footer-social footer-google" aria-label="Google">
+                    <i class="fab fa-google"></i>
+                  </a>
+                  <a href="http://www.youtube.com" class="footer-social footer-youtube" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-md-2 col-sm-6">
+                <h4 class="footer-column-title">Company</h4>
+                <ul class="footer-links">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="services.html">Services</a></li>
+                  <li><a href="blog.html">Blog</a></li>
+                  <li><a href="aboutus.html">About us</a></li>
+                  <li><a href="contactus.html">Contact us</a></li>
+                </ul>
+              </div>
+
+              <div class="col-md-2 col-sm-6">
+                <h4 class="footer-column-title">Buyer Desk</h4>
+                <ul class="footer-links">
+                  <li><a href="#">FAQs</a></li>
+                  <li><a href="#">Home Loan Partners</a></li>
+                  <li><a href="#">Site Visit Booking</a></li>
+                  <li><a href="#">Legal &amp; RERA</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                </ul>
+              </div>
+
+              <div class="col-md-4">
+                <h4 class="footer-column-title">Project Snapshots</h4>
+                <div class="footer-causes-grid">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNG5nNLSmMON82KTP72Ri6WREo9apamINs9JE9M4cERa_V_UdDfu2ZOubVQVVLbPFxLEM&usqp=CAU"
+                    alt="Project 1">
+                  <img
+                    src="https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&w=400&q=80"
+                    alt="Project 2">
+                  <img
+                    src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=400&q=80"
+                    alt="Project 3">
+                  <img
+                    src="https://www.shutterstock.com/image-photo/house-model-balance-equilibrium-concept-260nw-1822553567.jpg"
+                    alt="Project 4">
+                  <img
+                    src="https://www.shutterstock.com/image-photo/house-model-balance-equilibrium-concept-260nw-1822553567.jpg"
+                    alt="Project 5">
+                  <img
+                    src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=400&q=80"
+                    alt="Project 6">
+                </div>
+              </div>
+            </div>
+
+            <div class="footer-bottom">
+              © Copyright Compass Housing Society 2024. All rights reserved.
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const body = document.body;
+      const modeToggle = document.querySelector(".mode-toggle");
+      const modeIcon = document.querySelector(".mode-icon");
+      const storedTheme = localStorage.getItem("compass-theme");
+
+      if (storedTheme === "dark") {
+        body.classList.add("dark-mode");
+        if (modeIcon) modeIcon.textContent = "☀️";
+      } else {
+        if (modeIcon) modeIcon.textContent = "🌙";
+      }
+
+      if (modeToggle) {
+        modeToggle.addEventListener("click", function () {
+          const isDark = body.classList.toggle("dark-mode");
+          if (modeIcon) modeIcon.textContent = isDark ? "☀️" : "🌙";
+          localStorage.setItem("compass-theme", isDark ? "dark" : "light");
+        });
+      }
+
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navMenu = document.querySelector(".nav-menu");
+      const overlay = document.querySelector(".nav-overlay");
+
+      function closeMenu() {
+        if (navMenu) navMenu.classList.remove("nav-open");
+        if (overlay) overlay.classList.remove("active");
+      }
+
+      if (menuToggle && navMenu && overlay) {
+        menuToggle.addEventListener("click", function () {
+          navMenu.classList.toggle("nav-open");
+          overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", closeMenu);
+      }
+
+      const dropdownItems = document.querySelectorAll(".nav-item.dropdown > .nav-link-custom");
+
+      dropdownItems.forEach(link => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const parent = this.parentElement;
+
+          document.querySelectorAll(".nav-item.dropdown.open").forEach(item => {
+            if (item !== parent) {
+              item.classList.remove("open");
+            }
+          });
+
+          parent.classList.toggle("open");
+        });
+      });
+
+      const normalLinks = document.querySelectorAll(".nav-item:not(.dropdown) .nav-link-custom, .nav-item:not(.dropdown) a");
+
+      normalLinks.forEach(l => {
+        l.addEventListener("click", function () {
+          if (window.innerWidth <= 1030) {
+            closeMenu();
+          }
+        });
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 1030) {
+          closeMenu();
+        }
+      });
+
+      const loginForm = document.getElementById("loginForm");
+      if (loginForm) {
+        loginForm.addEventListener("submit", function (e) {
+          e.preventDefault();
+          
+          const email = document.getElementById("email").value.trim();
+          const password = document.getElementById("password").value;
+          const gmailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/i;
+          
+          if (!email || !password) {
+            alert("Please enter both email and password.");
+            return;
+          }
+          
+          if (!gmailPattern.test(email)) {
+            alert("Please enter a valid Gmail address (e.g., name@gmail.com).");
+            return;
+          }
+          
+          alert("Login successful! Welcome back to Compass Housing Society.");
+          
+        });
+      }
+    });
+  </script>
+</body>
+</html>

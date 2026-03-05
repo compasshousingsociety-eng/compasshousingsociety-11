@@ -1,0 +1,1438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Blog - Compass Housing Society</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #6A0DAD;
+      --light: #FFFFFF;
+      --dark: #000000;
+      --accent: #90EE90;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui;
+      color: var(--dark);
+      background: var(--light);
+    }
+
+    h1 { font-size: 46px; line-height: 1.2; }
+    h2 { font-size: 36px; line-height: 1.3; }
+    h3 { font-size: 24px; line-height: 1.4; }
+    h4, h5, h6 { font-size: 20px; line-height: 1.4; }
+    li, span, p { font-size: 18px; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; padding-left: 0; margin-bottom: 0; }
+
+    .text-muted { color: rgba(0, 0, 0, 0.7) !important; }
+    body.dark-mode .text-muted { color: rgba(255, 255, 255, 0.87) !important; }
+    body.dark-mode .nav-link-custom:hover { color: var(--accent); }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("Images/transparent-logo.jpeg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 570px auto;
+      opacity: 0.10;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body.dark-mode::after {
+      opacity: 0.08;
+    }
+
+    .page-wrapper {
+      max-width: 1920px;
+      margin: 0 auto;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding-top: 82px;
+    }
+
+    .content-layer { position: relative; z-index: 1; }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: var(--primary);
+      padding: 12px 40px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55);
+    }
+
+    .navbar-custom { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 24px; 
+      position: relative;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--light);
+    }
+
+    .brand img { width: 58px; height: auto; object-fit: contain; border-radius: 0; border: none; opacity: 0.97; background: transparent; }
+
+    .nav-menu { 
+      display: flex; 
+      align-items: center; 
+      gap: 24px; 
+      flex: 1; 
+      justify-content: center; 
+      flex-wrap: wrap; 
+    }
+    
+    .nav-item { position: relative; }
+    .nav-link-custom {
+      color: var(--light);
+      padding: 4px 0;
+      opacity: 0.9;
+      position: relative;
+      cursor: pointer;
+      display: inline-block;
+      transition: color 0.25s ease, opacity 0.25s ease;
+    }
+
+    .nav-link-custom::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0%;
+      height: 2px;
+      background-color: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav-link-custom:hover::after { width: 100%; }
+    .dropdown-toggle-custom::after { content: " ▾"; position: static; width: auto; height: auto; background: none; margin-left: 4px; }
+
+    .dropdown-menu-custom {
+      position: absolute;
+      left: 0;
+      top: calc(100% + 6px);
+      background-color: var(--dark);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      min-width: 190px;
+      display: none;
+      padding: 6px 0;
+      z-index: 120;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .dropdown-menu-custom li a {
+      display: block;
+      padding: 8px 18px;
+      color: var(--light);
+      white-space: nowrap;
+      opacity: 0.9;
+      transition: background-color 0.25s ease, opacity 0.25s ease, color 0.25s ease;
+    }
+
+    .dropdown-menu-custom li a:hover { background-color: rgba(106, 13, 173, 0.25); opacity: 1; color: var(--accent); }
+    .nav-item.dropdown.open>.dropdown-menu-custom { display: block; }
+
+    .nav-actions { 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      margin-left: auto; 
+    }
+    
+    .btn-animated { 
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease; 
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45); 
+    }
+    
+    .btn-animated:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.7); 
+      filter: brightness(0.96); 
+    }
+
+    .btn-register, .btn-subscribe {
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+      padding-inline: 10px;
+    }
+
+    .mode-toggle {
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 999px;
+      padding: 3px 6px;
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+      color: var(--light);
+      background: transparent;
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--light);
+      background: transparent;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      color: var(--light);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-left: 10px;
+    }
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .nav-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .subscription-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s ease, visibility 0.3s ease;
+    }
+
+    .subscription-popup.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .popup-content {
+      background: var(--light);
+      border-radius: 16px;
+      padding: 40px;
+      max-width: 500px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .subscription-popup.active .popup-content {
+      transform: translateY(0);
+    }
+
+    body.dark-mode .popup-content {
+      background: #1a1a1a;
+      color: #ffffff;
+    }
+
+    .popup-icon {
+      font-size: 64px;
+      margin-bottom: 20px;
+      color: var(--primary);
+    }
+
+    .popup-title {
+      color: var(--primary);
+      margin-bottom: 15px;
+      font-size: 28px;
+    }
+
+    body.dark-mode .popup-title {
+      color: var(--accent);
+    }
+
+    .popup-message {
+      color: var(--dark);
+      margin-bottom: 25px;
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    body.dark-mode .popup-message {
+      color: #cccccc;
+    }
+
+    .popup-close {
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+      padding: 12px 30px;
+      border-radius: 999px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .popup-close:hover {
+      background: var(--accent);
+      color: var(--dark);
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 1030px) {
+      header { padding: 10px 16px; }
+      .navbar-custom { 
+        gap: 10px; 
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      
+      .brand {
+        order: 1;
+        flex: 1;
+      }
+      
+      .nav-actions {
+        order: 2;
+        margin-left: 0;
+        justify-content: flex-end;
+      }
+      
+      .menu-toggle {
+        display: inline-flex;
+        order: 3;
+        margin-left: 10px;
+      }
+      
+      .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -280px;
+        height: 100vh;
+        width: 280px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        background: var(--dark);
+        padding: 80px 20px 40px;
+        border-radius: 16px 0 0 16px;
+        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.85);
+        z-index: 110;
+        gap: 12px;
+        transition: right 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        overflow-y: auto;
+        justify-content: flex-start;
+      }
+
+      .nav-menu.nav-open { right: 0; }
+      .nav-item { width: 100%; }
+      .nav-link-custom { width: 100%; padding: 10px 0; }
+      .dropdown-menu-custom { 
+        position: static; 
+        margin-top: 4px; 
+        background: transparent; 
+        border-radius: 0; 
+        border: none; 
+        box-shadow: none; 
+        padding: 0 0 4px 10px; 
+        display: none;
+      }
+      
+      .dropdown-menu-custom li a { padding: 8px 0; font-size: 15px; opacity: 0.85; }
+      .nav-item.dropdown.open>.dropdown-menu-custom { display: block; }
+      
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+
+    .blog-hero {
+      padding: 80px 30px 60px;
+      text-align: center;
+    }
+
+    .blog-hero-title {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .blog-hero-subtitle {
+      color: var(--dark);
+      max-width: 700px;
+      margin: 0 auto 30px;
+    }
+
+    .blog-search {
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .blog-search input {
+      width: 100%;
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: 2px solid var(--primary);
+      font-size: 16px;
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    .blog-search button {
+      position: absolute;
+      right: 8px;
+      top: 8px;
+      background: var(--primary);
+      color: var(--light);
+      border: none;
+      padding: 8px 20px;
+      border-radius: 999px;
+      cursor: pointer;
+    }
+
+    .blog-categories {
+      padding: 50px 30px;
+      background: rgba(144, 238, 144, 0.05);
+    }
+
+    .categories-title {
+      color: var(--primary);
+      text-align: center;
+      margin-bottom: 40px;
+      font-weight: bold;
+    }
+
+    .category-card {
+      background: var(--light);
+      border-radius: 14px;
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.3s ease;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+    }
+
+    .category-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .category-icon {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: var(--primary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+    }
+
+    .category-icon span {
+      font-size: 32px;
+      color: var(--light);
+    }
+
+    .category-name {
+      color: var(--primary);
+      margin-bottom: 10px;
+    }
+
+    .category-count {
+      color: var(--dark);
+      font-size: 14px;
+    }
+
+    .featured-posts {
+      padding: 60px 30px;
+      background: var(--light);
+    }
+
+    .featured-title {
+      color: var(--primary);
+      margin-bottom: 40px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .featured-post-card {
+      background: var(--light);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+      height: 100%;
+    }
+
+    .featured-post-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .featured-post-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+    }
+
+    .featured-post-body {
+      padding: 25px;
+    }
+
+    .post-category {
+      display: inline-block;
+      background: var(--accent);
+      color: var(--dark);
+      padding: 4px 12px;
+      border-radius: 999px;
+      font-size: 14px;
+      margin-bottom: 12px;
+    }
+
+    .featured-post-title {
+      color: var(--primary);
+      margin-bottom: 12px;
+    }
+
+    .featured-post-text {
+      color: var(--dark);
+      margin-bottom: 20px;
+    }
+
+    .post-meta {
+      display: flex;
+      justify-content: space-between;
+      color: var(--dark);
+      font-size: 14px;
+    }
+
+    .recent-posts {
+      padding: 60px 30px;
+      background: rgba(144, 238, 144, 0.05);
+    }
+
+    .recent-title {
+      color: var(--primary);
+      margin-bottom: 40px;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .recent-post-card {
+      display: flex;
+      gap: 20px;
+      background: var(--light);
+      border-radius: 14px;
+      padding: 20px;
+      margin-bottom: 25px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+      transition: transform 0.3s ease;
+    }
+
+    .recent-post-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .recent-post-image {
+      flex: 0 0 120px;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .recent-post-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .recent-post-content {
+      flex: 1;
+    }
+
+    .recent-post-title {
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+
+    .recent-post-excerpt {
+      color: var(--dark);
+      margin-bottom: 12px;
+      font-size: 15px;
+    }
+
+    .recent-post-date {
+      color: var(--dark);
+      font-size: 14px;
+    }
+
+    .blog-newsletter {
+      padding: 60px 30px;
+      background: transparent;
+      text-align: center;
+    }
+
+    .newsletter-title {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-weight: bold;
+    }
+
+    .newsletter-text {
+      color: var(--dark);
+      max-width: 600px;
+      margin: 0 auto 30px;
+    }
+
+    .newsletter-form {
+      max-width: 500px;
+      margin: 0 auto;
+      display: flex;
+      gap: 10px;
+    }
+
+    .newsletter-form input {
+      flex: 1;
+      padding: 14px 20px;
+      border-radius: 999px;
+      border: 2px solid var(--primary);
+      font-size: 16px;
+      background: var(--light);
+      color: var(--dark);
+    }
+
+    .site-footer {
+      background: var(--primary);
+      color: var(--light);
+      padding: 50px 0 18px;
+      font-size: 14px;
+      border-top: none;
+    }
+
+    .footer-brand-title {
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--light);
+    }
+
+    .footer-brand-title span.icon { font-size: 20px; margin-bottom: 10px; }
+    .footer-text { 
+      color: var(--light); 
+      margin-bottom: 10px; 
+      max-width: 260px; 
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .footer-label { font-weight: 700; }
+    .footer-contact-line { 
+      margin-bottom: 4px; 
+      text-align: center;
+    }
+    
+    .footer-socials { 
+      display: flex; 
+      gap: 12px; 
+      margin-top: 14px; 
+      justify-content: center;
+    }
+    
+    .footer-social { 
+      width: 36px; 
+      height: 36px; 
+      border-radius: 50%; 
+      border: 1px solid var(--light); 
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease; 
+      color: var(--light);
+      font-size: 16px;
+    }
+    .footer-social:hover { 
+      transform: translateY(-3px); 
+      border-color: var(--accent); 
+    }
+    .footer-facebook:hover { background-color: #1877F2; color: white; }
+    .footer-google:hover { background-color: #DB4437; color: white; }
+    .footer-youtube:hover { background-color: #FF0000; color: white; }
+    
+    .footer-column-title { 
+      font-weight: 800; 
+      margin-bottom: 10px; 
+      color: var(--light); 
+      text-align: center;
+    }
+    
+    .footer-links li { 
+      margin-bottom: 4px; 
+      color: var(--light); 
+      transition: color 0.25s ease;
+      text-align: center;
+    }
+    
+    .footer-links li a { color: inherit; }
+    .footer-links li a:hover { color: var(--accent); }
+    .footer-causes-grid { 
+      display: grid; 
+      grid-template-columns: repeat(3, minmax(0, 1fr)); 
+      gap: 6px; 
+      margin-top: 10px; 
+    }
+    
+    .footer-causes-grid img { width: 100%; height: 55px; border-radius: 8px; object-fit: cover; transition: transform 0.25s ease, box-shadow 0.25s ease; box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35); }
+    .footer-causes-grid img:hover { transform: translateY(-3px); box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4); }
+    .footer-bottom { 
+      margin-top: 26px; 
+      text-align: center; 
+      color: var(--light); 
+      font-size: 18px; 
+      width: 100%;
+    }
+
+    body.dark-mode {
+      background: #000000;
+      color: #ffffff;
+    }
+
+    body.dark-mode .blog-hero-title {
+      color: var(--accent);
+    }
+
+    body.dark-mode .blog-hero-subtitle {
+      color: #ffffff;
+    }
+
+    body.dark-mode .blog-search input {
+      background: #1a1a1a;
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    body.dark-mode .blog-search button {
+      background: var(--accent);
+      color: #000000;
+    }
+
+    body.dark-mode .categories-title {
+      color: var(--accent);
+    }
+
+    body.dark-mode .category-card {
+      background: #1a1a1a;
+      border-color: #333;
+    }
+
+    body.dark-mode .category-name {
+      color: var(--accent);
+    }
+
+    body.dark-mode .category-count {
+      color: #cccccc;
+    }
+
+    body.dark-mode .featured-posts {
+      background: #000000;
+    }
+
+    body.dark-mode .featured-title {
+      color: var(--accent);
+    }
+
+    body.dark-mode .featured-post-card {
+      background: #1a1a1a;
+    }
+
+    body.dark-mode .featured-post-title {
+      color: var(--accent);
+    }
+
+    body.dark-mode .featured-post-text {
+      color: #cccccc;
+    }
+
+    body.dark-mode .post-meta {
+      color: #cccccc;
+    }
+
+    body.dark-mode .recent-title {
+      color: var(--accent);
+    }
+
+    body.dark-mode .recent-post-card {
+      background: #1a1a1a;
+    }
+
+    body.dark-mode .recent-post-title {
+      color: var(--accent);
+    }
+
+    body.dark-mode .recent-post-excerpt {
+      color: #cccccc;
+    }
+
+    body.dark-mode .recent-post-date {
+      color: #cccccc;
+    }
+
+    body.dark-mode .blog-newsletter {
+      background: #000000;
+    }
+
+    body.dark-mode .newsletter-title {
+      color: var(--accent);
+    }
+
+    body.dark-mode .newsletter-text {
+      color: #ffffff;
+    }
+
+    body.dark-mode .newsletter-form input {
+      background: #1a1a1a;
+      color: #ffffff;
+      border-color: var(--accent);
+    }
+
+    body.dark-mode header,
+    body.dark-mode .site-footer {
+      background: #000000;
+    }
+
+    body.dark-mode .brand {
+      color: #ffffff;
+    }
+
+    body.dark-mode .footer-column-title {
+      color: #ffffff;
+    }
+
+    body.dark-mode .btn-register,
+    body.dark-mode .btn-subscribe {
+      background: var(--accent);
+      color: #000000;
+    }
+
+    body.dark-mode .nav-link-custom {
+      color: #ffffff;
+    }
+
+    body.dark-mode .dropdown-menu-custom {
+      background: #1a1a1a;
+    }
+
+    body.dark-mode .mode-toggle {
+      border-color: #ffffff;
+      color: #ffffff;
+    }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(24px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeIn {
+      0% { opacity: 0; transform: scale(0.98); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    @media (max-width: 1200px) {
+      header { padding-inline: 24px; }
+      .blog-hero { padding-inline: 24px; }
+    }
+
+    @media (max-width: 992px) {
+      .recent-post-card { flex-direction: column; }
+      .recent-post-image { flex: 0 0 200px; }
+      .newsletter-form { flex-direction: column; }
+    }
+
+    @media (max-width: 768px) {
+      .page-wrapper { padding-top: 70px; }
+      .blog-hero-title { font-size: 36px; }
+      .blog-categories, .featured-posts, .recent-posts, .blog-newsletter { padding: 40px 15px; }
+      .footer-grid { text-align: center !important; }
+      .footer-links { text-align: center !important; }
+      .footer-contact-line { text-align: center !important; }
+      .footer-text { text-align: center !important; margin-left: auto !important; margin-right: auto !important; }
+      .popup-content { padding: 30px 20px; }
+      .popup-title { font-size: 24px; }
+      .popup-icon { font-size: 48px; }
+    }
+
+    @media (max-width: 576px) {
+      .blog-hero-title { font-size: 28px; }
+      .blog-hero { padding: 60px 15px 40px; }
+      .category-card { padding: 20px; }
+      .footer-causes-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .nav-actions { position: relative; right: 0; top: 0; }
+      .menu-toggle { position: relative; z-index: 120; }
+      .brand span { font-size: 14px; }
+      .brand img { width: 40px; }
+    }
+
+    @media (max-width: 400px) {
+      .footer-causes-grid { grid-template-columns: 1fr; }
+      .blog-hero-title { font-size: 24px; }
+      .category-icon { width: 60px; height: 60px; }
+      .category-icon span { font-size: 28px; }
+    }
+
+    @media (max-width: 350px) {
+      .brand span { display: none; }
+      .brand { gap: 5px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <div class="content-layer">
+      <div class="nav-overlay"></div>
+
+      <div class="subscription-popup" id="subscriptionPopup">
+        <div class="popup-content">
+          <div class="popup-icon">📬</div>
+          <h3 class="popup-title">Thank You for Subscribing!</h3>
+          <p class="popup-message">You have successfully subscribed to our newsletter. You'll receive weekly updates on market trends, investment opportunities, and expert insights.</p>
+          <button class="popup-close" id="popupClose">Close</button>
+        </div>
+      </div>
+
+      <header>
+        <nav class="navbar-custom">
+          <div class="brand">
+            <img src="Images/logo.jpeg" alt="Compass Housing Society Logo">
+            <span>Compass Housing<br> Society</span>
+          </div>
+
+          <ul class="nav-menu">
+            <li class="nav-item dropdown">
+              <span class="nav-link-custom dropdown-toggle-custom">Home</span>
+              <ul class="dropdown-menu-custom">
+                <li><a href="index.html">Home -1</a></li>
+                <li><a href="Home2.html">Home -2</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <span class="nav-link-custom dropdown-toggle-custom">Services List</span>
+              <ul class="dropdown-menu-custom">
+                <li><a href="services.html">Services Page</a></li>
+                <li><a href="servicedetails.html">Services Details Page</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <span class="nav-link-custom dropdown-toggle-custom">Blog Design</span>
+              <ul class="dropdown-menu-custom">
+                <li><a href="blog.html">Blog Page</a></li>
+                <li><a href="blogdetails.html">Blog Details Page</a></li>
+                <li><a href="maintanancepage.html"> Additional Pages</a>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a href="aboutus.html" class="nav-link-custom">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="contactus.html" class="nav-link-custom">Contact Us</a>
+            </li>
+
+            </li>
+          </ul>
+
+          <div class="nav-actions">
+            <button class="mode-toggle" type="button" aria-label="Toggle dark / light mode">
+              <span class="mode-icon">🌙</span>
+            </button>
+            <a href="register.html">
+              <button class="btn-register btn-animated" type="button">Register</button>
+            </a>
+            <button class="menu-toggle" type="button" aria-label="Toggle menu">☰</button>
+          </div>
+        </nav>
+      </header>
+
+      <section class="blog-hero">
+        <div class="container">
+          <h1 class="blog-hero-title">Real Estate Insights & Trends</h1>
+          <p class="blog-hero-subtitle">
+            Stay updated with the latest market trends, investment strategies, and expert advice from Compass Housing Society professionals.
+          </p>   
+        </div>
+      </section>
+
+      <section class="blog-categories">
+        <div class="container">
+          <h2 class="categories-title">Browse by Category</h2>
+          <div class="row g-4">
+            <div class="col-md-3 col-sm-6">
+              <div class="category-card">
+                <div class="category-icon">
+                  <span>🏠</span>
+                </div>
+                <h4 class="category-name">Residential</h4>
+                <div class="category-count">24 Articles</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="category-card">
+                <div class="category-icon">
+                  <span>🏢</span>
+                </div>
+                <h4 class="category-name">Commercial</h4>
+                <div class="category-count">18 Articles</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="category-card">
+                <div class="category-icon">
+                  <span>📈</span>
+                </div>
+                <h4 class="category-name">Market Trends</h4>
+                <div class="category-count">32 Articles</div>
+              </div>
+            </div>
+            <div class="col-md-3 col-sm-6">
+              <div class="category-card">
+                <div class="category-icon">
+                  <span>⚖️</span>
+                </div>
+                <h4 class="category-name">Legal & RERA</h4>
+                <div class="category-count">15 Articles</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="featured-posts">
+        <div class="container">
+          <h2 class="featured-title">Featured Articles</h2>
+          <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+              <div class="featured-post-card">
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80" 
+                     alt="Future of Urban Living">
+                <div class="featured-post-body">
+                  <span class="post-category">Residential</span>
+                  <h4 class="featured-post-title">The Future of Urban Living: Smart Cities & Sustainable Homes</h4>
+                  <p class="featured-post-text">
+                    Explore how technology and sustainability are reshaping modern residential spaces and what it means for homebuyers.
+                  </p>
+                  <div class="post-meta">
+                    <span>By: Sarah Johnson</span>
+                    <span>Oct 15, 2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="featured-post-card">
+                <img src="https://images.unsplash.com/photo-1448630360428-65456885c650?auto=format&fit=crop&w=800&q=80" 
+                     alt="Commercial Real Estate">
+                <div class="featured-post-body">
+                  <span class="post-category">Commercial</span>
+                  <h4 class="featured-post-title">Post-Pandemic Office Spaces: Hybrid Work Models & Design Changes</h4>
+                  <p class="featured-post-text">
+                    How commercial real estate is adapting to new work patterns and what investors should consider in 2024.
+                  </p>
+                  <div class="post-meta">
+                    <span>By: Michael Chen</span>
+                    <span>Nov 2, 2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+              <div class="featured-post-card">
+                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?auto=format&fit=crop&w=800&q=80" 
+                     alt="Real Estate Investment">
+                <div class="featured-post-body">
+                  <span class="post-category">Investment</span>
+                  <h4 class="featured-post-title">Top 5 Emerging Real Estate Markets for High ROI in 2025</h4>
+                  <p class="featured-post-text">
+                    Expert analysis on upcoming property hotspots and strategic investment opportunities for maximum returns.
+                  </p>
+                  <div class="post-meta">
+                    <span>By: Robert Williams</span>
+                    <span>Sep 28, 2024</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="recent-posts">
+        <div class="container">
+          <h2 class="recent-title">Recent Articles</h2>
+          <div class="row">
+            <div class="col-lg-8">
+              <div class="recent-post-card">
+                <div class="recent-post-image">
+                  <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=400&q=80" 
+                       alt="Green Building Certification">
+                </div>
+                <div class="recent-post-content">
+                  <h4 class="recent-post-title">Understanding Green Building Certifications: LEED vs GRIHA</h4>
+                  <p class="recent-post-excerpt">
+                    Comprehensive guide to environmental certifications and how they impact property value and sustainability.
+                  </p>
+                  <div class="recent-post-date">Published: Oct 30, 2024 | 8 min read</div>
+                </div>
+              </div>
+              <div class="recent-post-card">
+                <div class="recent-post-image">
+                  <img src="https://images.unsplash.com/photo-1519648023493-d82b5f8d7b8a?auto=format&fit=crop&w=400&q=80" 
+                       alt="Home Loan Strategies">
+                </div>
+                <div class="recent-post-content">
+                  <h4 class="recent-post-title">Smart Home Loan Strategies: Fixed vs Floating Interest Rates</h4>
+                  <p class="recent-post-excerpt">
+                    Financial experts break down the pros and cons of different home loan options in current market conditions.
+                  </p>
+                  <div class="recent-post-date">Published: Oct 22, 2024 | 6 min read</div>
+                </div>
+              </div>
+              <div class="recent-post-card">
+                <div class="recent-post-image">
+                  <img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?auto=format&fit=crop&w=400&q=80" 
+                       alt="Property Tax Planning">
+                </div>
+                <div class="recent-post-content">
+                  <h4 class="recent-post-title">Property Tax Planning: Deductions & Benefits for Homeowners</h4>
+                  <p class="recent-post-excerpt">
+                    Legal guide to maximizing tax benefits through proper real estate investment planning and documentation.
+                  </p>
+                  <div class="recent-post-date">Published: Oct 18, 2024 | 10 min read</div>
+                </div>
+              </div>
+              <div class="recent-post-card">
+                <div class="recent-post-image">
+                  <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=400&q=80" 
+                       alt="Interior Design Trends">
+                </div>
+                <div class="recent-post-content">
+                  <h4 class="recent-post-title">2025 Interior Design Trends: Minimalism Meets Functionality</h4>
+                  <p class="recent-post-excerpt">
+                    Top design experts share upcoming trends that combine aesthetic appeal with practical living solutions.
+                  </p>
+                  <div class="recent-post-date">Published: Oct 12, 2024 | 7 min read</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="recent-post-card">
+                <div class="recent-post-image">
+                  <img src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=400&q=80" 
+                       alt="RERA Guidelines">
+                </div>
+                <div class="recent-post-content">
+                  <h4 class="recent-post-title">Latest RERA Guidelines: What Homebuyers Need to Know</h4>
+                  <p class="recent-post-excerpt">
+                    Updated regulatory framework and consumer protection measures in real estate transactions.
+                  </p>
+                  <div class="recent-post-date">Published: Oct 5, 2024 | 5 min read</div>
+                </div>
+              </div>
+              <div class="recent-post-card">
+                <div class="recent-post-image">
+                  <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=400&q=80" 
+                       alt="Luxury Real Estate">
+                </div>
+                <div class="recent-post-content">
+                  <h4 class="recent-post-title">Luxury Real Estate: Amenities That Define Premium Living</h4>
+                  <p class="recent-post-excerpt">
+                    From smart home automation to wellness centers, explore amenities that justify premium property prices.
+                  </p>
+                  <div class="recent-post-date">Published: Sep 29, 2024 | 9 min read</div>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer" id="contact">
+        <div class="container">
+          <div class="footer-inner">
+            <div class="row footer-grid g-4">
+              <div class="col-md-4">
+                <div class="footer-brand-title">
+                  <span class="icon">🏠</span>
+                  <h4 class="footer-column-title">Compass Housing</h4>
+                </div>
+                <p class="footer-text">
+                  Compass Housing Society creates master-planned communities.              
+                </p>
+                <p class="footer-contact-line">
+                  <span class="footer-label">Phone:</span> +91-98765-43210
+                </p>
+                <p class="footer-contact-line">
+                  <span class="footer-label">Address:</span> Compass Square, Financial District<br>
+                  Your City, Country 500001
+                </p>
+
+                <div class="footer-socials">
+                  <a href="http://www.facebook.com" class="footer-social footer-facebook" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="http://www.google.com" class="footer-social footer-google" aria-label="Google">
+                    <i class="fab fa-google"></i>
+                  </a>
+                  <a href="http://www.youtube.com" class="footer-social footer-youtube" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-md-2 col-sm-6">
+                <h4 class="footer-column-title">Company</h4>
+                <ul class="footer-links">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="services.html">Services</a></li>
+                  <li><a href="blog.html">Blog</a></li>
+                  <li><a href="aboutus.html">About us</a></li>
+                  <li><a href="contactus.html">Contact us</a></li>
+                </ul>
+              </div>
+
+              <div class="col-md-2 col-sm-6">
+                <h4 class="footer-column-title">Buyer Desk</h4>
+                <ul class="footer-links">
+                  <li><a href="#">FAQs</a></li>
+                  <li><a href="#">Home Loan Partners</a></li>
+                  <li><a href="#">Site Visit Booking</a></li>
+                  <li><a href="#">Legal &amp; RERA</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                </ul>
+              </div>
+
+              <div class="col-md-4">
+                <h4 class="footer-column-title">Project Snapshots</h4>
+                <div class="footer-causes-grid">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNG5nNLSmMON82KTP72Ri6WREo9apamINs9JE9M4cERa_V_UdDfu2ZOubVQVVLbPFxLEM&usqp=CAU"
+                    alt="Project 1">
+                  <img
+                    src="https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&w=400&q=80"
+                    alt="Project 2">
+                  <img
+                    src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=400&q=80"
+                    alt="Project 3">
+                  <img
+                    src="https://www.shutterstock.com/image-photo/house-model-balance-equilibrium-concept-260nw-1822553567.jpg"
+                    alt="Project 4">
+                  <img
+                    src="https://www.shutterstock.com/image-photo/house-model-balance-equilibrium-concept-260nw-1822553567.jpg"
+                    alt="Project 5">
+                  <img
+                    src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=400&q=80"
+                    alt="Project 6">
+                </div>
+              </div>
+            </div>
+
+            <div class="footer-bottom">
+              © Copyright Compass Housing Society 2024. All rights reserved.
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const body = document.body;
+      const modeToggle = document.querySelector(".mode-toggle");
+      const modeIcon = document.querySelector(".mode-icon");
+      const storedTheme = localStorage.getItem("compass-theme");
+
+      if (storedTheme === "dark") {
+        body.classList.add("dark-mode");
+        if (modeIcon) modeIcon.textContent = "☀️";
+      } else {
+        if (modeIcon) modeIcon.textContent = "🌙";
+      }
+
+      if (modeToggle) {
+        modeToggle.addEventListener("click", function () {
+          const isDark = body.classList.toggle("dark-mode");
+          if (modeIcon) modeIcon.textContent = isDark ? "☀️" : "🌙";
+          localStorage.setItem("compass-theme", isDark ? "dark" : "light");
+        });
+      }
+
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navMenu = document.querySelector(".nav-menu");
+      const overlay = document.querySelector(".nav-overlay");
+
+      function closeMenu() {
+        if (navMenu) navMenu.classList.remove("nav-open");
+        if (overlay) overlay.classList.remove("active");
+      }
+
+      if (menuToggle && navMenu && overlay) {
+        menuToggle.addEventListener("click", function () {
+          navMenu.classList.toggle("nav-open");
+          overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", closeMenu);
+      }
+
+      const dropdownItems = document.querySelectorAll(".nav-item.dropdown > .nav-link-custom");
+
+      dropdownItems.forEach(link => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const parent = this.parentElement;
+
+          document.querySelectorAll(".nav-item.dropdown.open").forEach(item => {
+            if (item !== parent) {
+              item.classList.remove("open");
+            }
+          });
+
+          parent.classList.toggle("open");
+        });
+      });
+
+      const normalLinks = document.querySelectorAll(".nav-item:not(.dropdown) .nav-link-custom, .nav-item:not(.dropdown) a");
+
+      normalLinks.forEach(l => {
+        l.addEventListener("click", function () {
+          if (window.innerWidth <= 1030) {
+            closeMenu();
+          }
+        });
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 1030) {
+          closeMenu();
+        }
+      });
+
+      const categoryCards = document.querySelectorAll(".category-card");
+      categoryCards.forEach(card => {
+        card.addEventListener("click", function() {
+          const categoryName = this.querySelector(".category-name").textContent;
+          document.querySelector(".blog-search input").value = categoryName;
+        });
+      });
+
+      document.querySelector(".blog-search button").addEventListener("click", function() {
+        const searchTerm = document.querySelector(".blog-search input").value;
+        if(searchTerm.trim() !== "") {
+          alert(`Searching for: ${searchTerm}`);
+        }
+      });
+
+      const subscribeBtn = document.getElementById("subscribeBtn");
+      const subscriptionPopup = document.getElementById("subscriptionPopup");
+      const popupClose = document.getElementById("popupClose");
+      const newsletterInput = document.getElementById("newsletterEmail");
+
+      if (subscribeBtn && subscriptionPopup) {
+        subscribeBtn.addEventListener("click", function() {
+          const email = newsletterInput.value.trim();
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+          
+          if(email === "") {
+            alert("Please enter your email address.");
+            return;
+          }
+          
+          if(!emailPattern.test(email)) {
+            alert("Please enter a valid email address (e.g., name@example.com).");
+            return;
+          }
+          
+          subscriptionPopup.classList.add("active");
+          newsletterInput.value = "";
+        });
+      }
+
+      if (popupClose) {
+        popupClose.addEventListener("click", function() {
+          subscriptionPopup.classList.remove("active");
+        });
+      }
+
+      if (subscriptionPopup) {
+        subscriptionPopup.addEventListener("click", function(e) {
+          if (e.target === subscriptionPopup) {
+            subscriptionPopup.classList.remove("active");
+          }
+        });
+      }
+
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && subscriptionPopup.classList.contains('active')) {
+          subscriptionPopup.classList.remove('active');
+        }
+      });
+
+      newsletterInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+          subscribeBtn.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>

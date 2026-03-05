@@ -1,0 +1,1451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Compass Housing Society - Home 2</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #6A0DAD;
+      --light: #FFFFFF;
+      --dark: #000000;
+      --accent: #90EE90;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: system-ui;
+      color: var(--dark);
+      background: var(--light);
+    }
+
+    h1 { font-size: 46px; line-height: 1.2; }
+    h2 { font-size: 36px; line-height: 1.3; }
+    h3 { font-size: 24px; line-height: 1.4; }
+    h4, h5, h6 { font-size: 20px; line-height: 1.4; }
+    li, span, p { font-size: 18px; line-height: 1.6; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; padding-left: 0; margin-bottom: 0; }
+
+    .text-muted { color: rgba(0, 0, 0, 0.7) !important; }
+    body.dark-mode .text-muted { color: rgba(255, 255, 255, 0.87) !important; }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url("Images/transparent-logo.jpeg");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 570px auto;
+      opacity: 0.10;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    body.dark-mode::after {
+      opacity: 0.08;
+    }
+
+    .page-wrapper {
+      max-width: 1920px;
+      margin: 0 auto;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
+      padding-top: 82px;
+    }
+
+    .content-layer { position: relative; z-index: 1; }
+
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      background: var(--primary);
+      padding: 12px 40px;
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.55);
+    }
+
+    body.dark-mode header,
+    body.dark-mode .site-footer {
+      background: #000000;
+    }
+
+    .navbar-custom { 
+      display: flex; 
+      align-items: center; 
+      justify-content: space-between; 
+      gap: 24px; 
+      position: relative;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 900;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      color: var(--light);
+    }
+
+    .brand img { width: 58px; height: auto; object-fit: contain; border-radius: 0; border: none; opacity: 0.97; background: transparent; }
+
+    .nav-menu { 
+      display: flex; 
+      align-items: center; 
+      gap: 24px; 
+      flex: 1; 
+      justify-content: center; 
+      flex-wrap: wrap; 
+    }
+    
+    .nav-item { position: relative; }
+    .nav-link-custom {
+      color: var(--light);
+      padding: 4px 0;
+      opacity: 0.9;
+      position: relative;
+      cursor: pointer;
+      display: inline-block;
+      transition: color 0.25s ease, opacity 0.25s ease;
+    }
+
+    .nav-link-custom::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -3px;
+      width: 0%;
+      height: 2px;
+      background-color: var(--accent);
+      transition: width 0.25s ease;
+    }
+
+    .nav-link-custom:hover::after { width: 100%; }
+    .dropdown-toggle-custom::after { content: " ▾"; position: static; width: auto; height: auto; background: none; margin-left: 4px; }
+
+    .dropdown-menu-custom {
+      position: absolute;
+      left: 0;
+      top: calc(100% + 6px);
+      background-color: var(--dark);
+      border-radius: 10px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      min-width: 190px;
+      display: none;
+      padding: 6px 0;
+      z-index: 120;
+      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .dropdown-menu-custom li a {
+      display: block;
+      padding: 8px 18px;
+      color: var(--light);
+      white-space: nowrap;
+      opacity: 0.9;
+      transition: background-color 0.25s ease, opacity 0.25s ease, color 0.25s ease;
+    }
+
+    .dropdown-menu-custom li a:hover { background-color: rgba(106, 13, 173, 0.25); opacity: 1; color: var(--accent); }
+    .nav-item.dropdown.open>.dropdown-menu-custom { display: block; }
+
+    .nav-actions { 
+      display: flex; 
+      align-items: center; 
+      gap: 12px; 
+      margin-left: auto; 
+    }
+    
+    .btn-animated { 
+      transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease; 
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.45); 
+    }
+    
+    .btn-animated:hover { 
+      transform: translateY(-2px); 
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.7); 
+      filter: brightness(0.96); 
+    }
+
+    .btn-register {
+      background: var(--accent);
+      color: var(--dark);
+      border: none;
+      padding: 5px 10px;
+      border-radius: 999px;
+      font-weight: bold;
+      cursor: pointer;
+      white-space: nowrap;
+      padding-inline: 10px;
+    }
+
+    body.dark-mode .btn-register {
+      background: var(--accent);
+      color: #000000;
+    }
+
+    .mode-toggle {
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 999px;
+      padding: 3px 6px;
+      font-size: 16px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.25s ease, transform 0.25s ease, border-color 0.25s ease;
+      color: var(--light);
+      background: transparent;
+    }
+
+    body.dark-mode .mode-toggle {
+      border-color: #ffffff;
+      color: #ffffff;
+    }
+
+    .menu-toggle {
+      display: none;
+      border: 1px solid var(--light);
+      background: transparent;
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+      color: var(--light);
+      padding: 4px 10px;
+      border-radius: 4px;
+      margin-left: 10px;
+    }
+
+    .nav-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 90;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.25s ease;
+    }
+
+    .nav-overlay.active { opacity: 1; pointer-events: auto; }
+
+    .hero-home2 {
+      background: linear-gradient(135deg, rgba(106, 13, 173, 0.05) 0%, rgba(144, 238, 144, 0.05) 100%);
+      padding: 80px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-home2::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(45deg, var(--primary) 0%, transparent 100%);
+      opacity: 0.03;
+    }
+
+    .hero2-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero2-title {
+      color: var(--primary);
+      margin-bottom: 20px;
+      font-weight: 900;
+    }
+
+    body.dark-mode .hero2-title {
+      color: var(--accent);
+    }
+
+    .hero2-subtitle {
+      color: rgba(0, 0, 0, 0.8);
+      font-size: 20px;
+      margin-bottom: 30px;
+      max-width: 600px;
+    }
+
+    body.dark-mode .hero2-subtitle {
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    .hero2-stats {
+      display: flex;
+      gap: 40px;
+      margin: 30px 0;
+      flex-wrap: wrap;
+    }
+
+    .hero2-stat {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .hero2-stat-icon {
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 24px;
+    }
+
+    .hero2-stat-text {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .hero2-stat-number {
+      font-size: 28px;
+      font-weight: 900;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    body.dark-mode .hero2-stat-number {
+      color: var(--accent);
+    }
+
+    .hero2-stat-label {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.7);
+      font-weight: 600;
+    }
+
+    body.dark-mode .hero2-stat-label {
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    .hero2-image {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+      height: 500px;
+    }
+
+    .hero2-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero2-badge {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      background: var(--accent);
+      color: var(--dark);
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .featured-section {
+      padding: 80px 0;
+      background: white;
+    }
+
+    body.dark-mode .featured-section {
+      background: #000000;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .section-title h2 {
+      color: var(--primary);
+      font-weight: 900;
+      margin-bottom: 15px;
+    }
+
+    body.dark-mode .section-title h2 {
+      color: var(--accent);
+    }
+
+    .section-title p {
+      color: rgba(0, 0, 0, 0.7);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    body.dark-mode .section-title p {
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    .property-card {
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    body.dark-mode .property-card {
+      background: #1a1a1a;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .property-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .property-image {
+      position: relative;
+      height: 250px;
+      overflow: hidden;
+    }
+
+    .property-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .property-card:hover .property-image img {
+      transform: scale(1.05);
+    }
+
+    .property-badge {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--primary);
+      color: white;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .property-content {
+      padding: 25px;
+    }
+
+    .property-price {
+      color: var(--primary);
+      font-size: 24px;
+      font-weight: 900;
+      margin-bottom: 10px;
+    }
+
+    body.dark-mode .property-price {
+      color: var(--accent);
+    }
+
+    .property-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--dark);
+    }
+
+    body.dark-mode .property-title {
+      color: #ffffff;
+    }
+
+    .property-location {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: rgba(0, 0, 0, 0.6);
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+
+    body.dark-mode .property-location {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .property-features {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 15px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    body.dark-mode .property-features {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .feature {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .feature-icon {
+      width: 24px;
+      height: 24px;
+      color: var(--primary);
+    }
+
+    body.dark-mode .feature-icon {
+      color: var(--accent);
+    }
+
+    .feature-text {
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.7);
+    }
+
+    body.dark-mode .feature-text {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .why-choose-section {
+      padding: 80px 0;
+      background: linear-gradient(135deg, rgba(106, 13, 173, 0.03) 0%, rgba(144, 238, 144, 0.03) 100%);
+    }
+
+    body.dark-mode .why-choose-section {
+      background: linear-gradient(135deg, rgba(106, 13, 173, 0.1) 0%, rgba(144, 238, 144, 0.1) 100%);
+    }
+
+    .feature-box {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+
+    body.dark-mode .feature-box {
+      background: #1a1a1a;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .feature-box:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+    }
+
+    body.dark-mode .feature-box:hover {
+      box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+    }
+
+    .feature-icon-box {
+      width: 70px;
+      height: 70px;
+      background: var(--primary);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      color: white;
+      font-size: 30px;
+    }
+
+    .feature-title {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 15px;
+      color: var(--dark);
+    }
+
+    body.dark-mode .feature-title {
+      color: var(--accent);
+    }
+
+    .feature-description {
+      color: rgba(0, 0, 0, 0.7);
+      font-size: 16px;
+    }
+
+    body.dark-mode .feature-description {
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    .testimonial-section {
+      padding: 80px 0;
+      background: white;
+    }
+
+    body.dark-mode .testimonial-section {
+      background: #000000;
+    }
+
+    .testimonial-card {
+      background: white;
+      padding: 30px;
+      border-radius: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      margin: 20px;
+      position: relative;
+    }
+
+    body.dark-mode .testimonial-card {
+      background: #1a1a1a;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
+
+    .testimonial-content {
+      font-style: italic;
+      color: rgba(0, 0, 0, 0.8);
+      margin-bottom: 20px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    body.dark-mode .testimonial-content {
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-info h4 {
+      margin: 0;
+      color: var(--primary);
+      font-weight: 700;
+    }
+
+    body.dark-mode .author-info h4 {
+      color: var(--accent);
+    }
+
+    .author-info p {
+      margin: 0;
+      color: rgba(0, 0, 0, 0.6);
+      font-size: 14px;
+    }
+
+    body.dark-mode .author-info p {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .testimonial-rating {
+      color: #ffc107;
+      margin: 10px 0;
+    }
+
+    .site-footer {
+      background: var(--primary);
+      color: var(--light);
+      padding: 50px 0 18px;
+      font-size: 14px;
+      border-top: none;
+    }
+
+    .footer-brand-title {
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--light);
+    }
+
+    .footer-brand-title span.icon { font-size: 20px; margin-bottom: 10px; }
+    .footer-text { 
+      color: var(--light); 
+      margin-bottom: 10px; 
+      max-width: 260px; 
+      text-align: center;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .footer-label { font-weight: 700; }
+    .footer-contact-line { 
+      margin-bottom: 4px; 
+      text-align: center;
+    }
+    
+    .footer-socials { 
+      display: flex; 
+      gap: 12px; 
+      margin-top: 14px; 
+      justify-content: center;
+    }
+    
+    .footer-social { 
+      width: 36px; 
+      height: 36px; 
+      border-radius: 50%; 
+      border: 1px solid var(--light); 
+      display: inline-flex; 
+      align-items: center; 
+      justify-content: center; 
+      transition: transform 0.25s ease, background-color 0.25s ease, border-color 0.25s ease; 
+      color: var(--light);
+      font-size: 16px;
+    }
+    .footer-social:hover { 
+      transform: translateY(-3px); 
+      border-color: var(--accent); 
+    }
+    .footer-facebook:hover { background-color: #1877F2; color: white; }
+    .footer-google:hover { background-color: #DB4437; color: white; }
+    .footer-youtube:hover { background-color: #FF0000; color: white; }
+    
+    .footer-column-title { 
+      font-weight: 800; 
+      margin-bottom: 10px; 
+      color: var(--light); 
+      text-align: center;
+    }
+    
+    .footer-links li { 
+      margin-bottom: 4px; 
+      color: var(--light); 
+      transition: color 0.25s ease;
+      text-align: center;
+    }
+    
+    .footer-links li a { color: inherit; }
+    .footer-links li a:hover { color: var(--accent); }
+    .footer-causes-grid { 
+      display: grid; 
+      grid-template-columns: repeat(3, minmax(0, 1fr)); 
+      gap: 6px; 
+      margin-top: 10px; 
+    }
+    
+    .footer-causes-grid img { 
+      width: 100%; 
+      height: 55px; 
+      border-radius: 8px; 
+      object-fit: cover; 
+      transition: transform 0.25s ease, box-shadow 0.25s ease; 
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.35); 
+    }
+    .footer-causes-grid img:hover { 
+      transform: translateY(-3px); 
+      box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4); 
+    }
+    .footer-bottom { 
+      margin-top: 26px; 
+      text-align: center; 
+      color: var(--light); 
+      font-size: 18px; 
+      width: 100%;
+    }
+
+    body.dark-mode {
+      background: #000000;
+      color: #ffffff;
+    }
+
+    body.dark-mode .brand {
+      color: #ffffff;
+    }
+
+    body.dark-mode .footer-column-title {
+      color: #ffffff;
+    }
+
+    body.dark-mode .nav-link-custom {
+      color: #ffffff;
+    }
+
+    body.dark-mode .dropdown-menu-custom {
+      background: #1a1a1a;
+    }
+
+    @media (max-width: 1030px) {
+      header { padding: 10px 16px; }
+      .navbar-custom { 
+        gap: 10px; 
+        justify-content: space-between;
+        flex-wrap: wrap;
+      }
+      
+      .brand {
+        order: 1;
+        flex: 1;
+      }
+      
+      .nav-actions {
+        order: 2;
+        margin-left: 0;
+        justify-content: flex-end;
+      }
+      
+      .menu-toggle {
+        display: inline-flex;
+        order: 3;
+        margin-left: 10px;
+      }
+      
+      .nav-menu {
+        position: fixed;
+        top: 0;
+        right: -280px;
+        height: 100vh;
+        width: 280px;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        background: var(--dark);
+        padding: 80px 20px 40px;
+        border-radius: 16px 0 0 16px;
+        box-shadow: -12px 0 30px rgba(0, 0, 0, 0.85);
+        z-index: 110;
+        gap: 12px;
+        transition: right 0.3s ease;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        overflow-y: auto;
+        justify-content: flex-start;
+      }
+
+      .nav-menu.nav-open { right: 0; }
+      .nav-item { width: 100%; }
+      .nav-link-custom { width: 100%; padding: 10px 0; }
+      .dropdown-menu-custom { 
+        position: static; 
+        margin-top: 4px; 
+        background: transparent; 
+        border-radius: 0; 
+        border: none; 
+        box-shadow: none; 
+        padding: 0 0 4px 10px; 
+        display: none;
+      }
+      
+      .dropdown-menu-custom li a { padding: 8px 0; font-size: 15px; opacity: 0.85; }
+      .nav-item.dropdown.open>.dropdown-menu-custom { display: block; }
+      
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+    }
+
+    @media (max-width: 992px) {
+      .hero-home2 {
+        padding: 60px 0;
+      }
+      
+      .hero2-title {
+        font-size: 36px;
+      }
+      
+      .hero2-subtitle {
+        font-size: 18px;
+      }
+      
+      .hero2-image {
+        margin-top: 40px;
+        height: 400px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .page-wrapper { padding-top: 70px; }
+      .hero2-title { font-size: 28px; }
+      .hero2-subtitle { font-size: 16px; }
+      .hero2-stats { gap: 20px; }
+      .hero2-image { height: 350px; }
+      
+      .footer-grid { 
+        text-align: center !important;
+      }
+      
+      .footer-links {
+        text-align: center !important;
+      }
+      
+      .footer-contact-line {
+        text-align: center !important;
+      }
+      
+      .footer-text {
+        text-align: center !important;
+        margin-left: auto !important;
+        margin-right: auto !important;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero2-title { font-size: 24px; }
+      .hero2-subtitle { font-size: 15px; }
+      section { padding: 30px 15px; }
+      .hero2-image { height: 300px; }
+      .footer-causes-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      
+      .nav-actions {
+        position: relative;
+        right: 0;
+        top: 0;
+      }
+      
+      .menu-toggle {
+        position: relative;
+        z-index: 120;
+      }
+      
+      .brand span {
+        font-size: 14px;
+      }
+      
+      .brand img {
+        width: 40px;
+      }
+      
+      .hero2-stat {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .hero2-title { font-size: 22px; }
+      .footer-causes-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 350px) {
+      .brand span {
+        display: none;
+      }
+      
+      .brand {
+        gap: 5px;
+      }
+      
+      .hero2-image { height: 250px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <div class="content-layer">
+      <div class="nav-overlay"></div>
+
+      <header>
+        <nav class="navbar-custom">
+          <div class="brand">
+            <img src="Images/logo.jpeg" alt="Compass Housing Society Logo">
+            <span>Compass Housing<br> Society</span>
+          </div>
+
+          <ul class="nav-menu">
+            <li class="nav-item dropdown">
+              <span class="nav-link-custom dropdown-toggle-custom">Home</span>
+              <ul class="dropdown-menu-custom">
+                <li><a href="index.html">Home -1</a></li>
+                <li><a href="Home2.html">Home -2</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <span class="nav-link-custom dropdown-toggle-custom">Services List</span>
+              <ul class="dropdown-menu-custom">
+                <li><a href="services.html">Services Page</a></li>
+                <li><a href="servicedetails.html">Services Details Page</a></li>
+              </ul>
+            </li>
+
+            <li class="nav-item dropdown">
+              <span class="nav-link-custom dropdown-toggle-custom">Blog Design</span>
+              <ul class="dropdown-menu-custom">
+                <li><a href="blog.html">Blog Page</a></li>
+                <li><a href="blogdetails.html">Blog Details Page</a></li>
+                <li><a href="maintanancepage.html"> Additional Pages</a>
+              </ul>
+            </li>
+
+            <li class="nav-item">
+              <a href="aboutus.html" class="nav-link-custom">About Us</a>
+            </li>
+            <li class="nav-item">
+              <a href="contactus.html" class="nav-link-custom">Contact Us</a>
+            </li>
+          </ul>
+
+          <div class="nav-actions">
+            <button class="mode-toggle" type="button" aria-label="Toggle dark / light mode">
+              <span class="mode-icon">🌙</span>
+            </button>
+            <a href="register.html">
+              <button class="btn-register btn-animated" type="button">Register</button>
+            </a>
+            <button class="menu-toggle" type="button" aria-label="Toggle menu">☰</button>
+          </div>
+        </nav>
+      </header>
+
+      <section class="hero-home2">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-lg-6">
+              <div class="hero2-image">
+                <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=1200&q=80" 
+                     alt="Modern Luxury Apartment">
+              </div>
+            </div>
+            <div class="col-lg-6">
+              <div class="hero2-content">
+                <h1 class="hero2-title">Your Journey to Perfect Living Starts Here</h1>
+                <p class="hero2-subtitle">
+                  At Compass Housing Society, we don't just build homes—we create communities where every detail is crafted for comfort, connection, and lasting value.
+                </p>
+                
+                <div class="hero2-stats">
+                  <div class="hero2-stat">
+                    <div class="hero2-stat-icon">🏠</div>
+                    <div class="hero2-stat-text">
+                      <div class="hero2-stat-number">3,250+</div>
+                      <div class="hero2-stat-label">Homes Delivered</div>
+                    </div>
+                  </div>
+                  <div class="hero2-stat">
+                    <div class="hero2-stat-icon">📈</div>
+                    <div class="hero2-stat-text">
+                      <div class="hero2-stat-number">28+</div>
+                      <div class="hero2-stat-label">Ongoing Projects</div>
+                    </div>
+                  </div>
+                  <div class="hero2-stat">
+                    <div class="hero2-stat-icon">⭐</div>
+                    <div class="hero2-stat-text">
+                      <div class="hero2-stat-number">98%</div>
+                      <div class="hero2-stat-label">Customer Satisfaction</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="featured-section">
+        <div class="container">
+          <div class="section-title">
+            <h2>Featured Properties</h2>
+            <p>Discover our handpicked selection of premium properties designed for modern living and smart investments.</p>
+          </div>
+          
+          <div class="row g-4">
+            <div class="col-lg-4 col-md-6">
+              <div class="property-card">
+                <div class="property-image">
+                  <img src="https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?auto=format&fit=crop&w=800&q=80" 
+                       alt="Urban Heights Apartments">
+                  <div class="property-badge">Premium</div>
+                </div>
+                <div class="property-content">
+                  <div class="property-price">₹1.2Cr - ₹2.5Cr</div>
+                  <h3 class="property-title">Urban Heights Apartments</h3>
+                  <div class="property-location">
+                    <span>📍</span>
+                    <span>Central Business District</span>
+                  </div>
+                  <p>3 & 4 BHK luxury apartments with smart home features, private terraces, and 360° city views.</p>
+                  <div class="property-features">
+                    <div class="feature">
+                      <span class="feature-icon">🛏️</span>
+                      <span class="feature-text">3-4 Beds</span>
+                    </div>
+                    <div class="feature">
+                      <span class="feature-icon">🛁</span>
+                      <span class="feature-text">3 Baths</span>
+                    </div>
+                    <div class="feature">
+                      <span class="feature-icon">📏</span>
+                      <span class="feature-text">1800-2400 sqft</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+              <div class="property-card">
+                <div class="property-image">
+                  <img src="https://images.unsplash.com/photo-1518780664697-55e3ad937233?auto=format&fit=crop&w=800&q=80" 
+                       alt="Lakeside Villas">
+                  <div class="property-badge">Luxury</div>
+                </div>
+                <div class="property-content">
+                  <div class="property-price">₹2.8Cr - ₹4.5Cr</div>
+                  <h3 class="property-title">Lakeside Villas</h3>
+                  <div class="property-location">
+                    <span>📍</span>
+                    <span>Lakeside Township</span>
+                  </div>
+                  <p>Spacious villas with private gardens, direct lake access, and premium clubhouse amenities.</p>
+                  <div class="property-features">
+                    <div class="feature">
+                      <span class="feature-icon">🛏️</span>
+                      <span class="feature-text">4-5 Beds</span>
+                    </div>
+                    <div class="feature">
+                      <span class="feature-icon">🛁</span>
+                      <span class="feature-text">4 Baths</span>
+                    </div>
+                    <div class="feature">
+                      <span class="feature-icon">📏</span>
+                      <span class="feature-text">3200-4500 sqft</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-4 col-md-6">
+              <div class="property-card">
+                <div class="property-image">
+                  <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=800&q=80" 
+                       alt="Business Hub Offices">
+                  <div class="property-badge">Commercial</div>
+                </div>
+                <div class="property-content">
+                  <div class="property-price">₹8500/sqft</div>
+                  <h3 class="property-title">Business Hub Offices</h3>
+                  <div class="property-location">
+                    <span>📍</span>
+                    <span>Airport Growth Zone</span>
+                  </div>
+                  <p>Grade A office spaces with plug-and-play infrastructure, high-speed connectivity, and retail plazas.</p>
+                  <div class="property-features">
+                    <div class="feature">
+                      <span class="feature-icon">🏢</span>
+                      <span class="feature-text">500-5000 sqft</span>
+                    </div>
+                    <div class="feature">
+                      <span class="feature-icon">🚗</span>
+                      <span class="feature-text">Parking</span>
+                    </div>
+                    <div class="feature">
+                      <span class="feature-icon">☕</span>
+                      <span class="feature-text">Cafeteria</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="why-choose-section">
+        <div class="container">
+          <div class="section-title">
+            <h2>Why Choose Compass Housing</h2>
+            <p>We redefine real estate with a commitment to quality, transparency, and customer-centric values.</p>
+          </div>
+          
+          <div class="row g-4">
+            <div class="col-lg-3 col-md-6">
+              <div class="feature-box">
+                <div class="feature-icon-box">🏆</div>
+                <h3 class="feature-title">Award-Winning Design</h3>
+                <p class="feature-description">Recognized for architectural excellence and innovative community planning.</p>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+              <div class="feature-box">
+                <div class="feature-icon-box">🔒</div>
+                <h3 class="feature-title">RERA Certified</h3>
+                <p class="feature-description">All projects fully compliant with regulatory standards and transparency norms.</p>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+              <div class="feature-box">
+                <div class="feature-icon-box">🤝</div>
+                <h3 class="feature-title">Trusted Partners</h3>
+                <p class="feature-description">Network of certified builders, architects, and financial institutions.</p>
+              </div>
+            </div>
+            
+            <div class="col-lg-3 col-md-6">
+              <div class="feature-box">
+                <div class="feature-icon-box">💚</div>
+                <h3 class="feature-title">Green Communities</h3>
+                <p class="feature-description">Eco-friendly developments with sustainable features and green spaces.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="testimonial-section">
+        <div class="container">
+          <div class="section-title">
+            <h2>What Our Residents Say</h2>
+            <p>Real stories from people who found their dream home with Compass Housing Society.</p>
+          </div>
+          
+          <div class="row g-4">
+            <div class="col-lg-4">
+              <div class="testimonial-card">
+                <div class="testimonial-rating">★★★★★</div>
+                <p class="testimonial-content">
+                  "The entire home-buying process was smooth and transparent. Our 3BHK apartment at Urban Heights exceeded expectations. The community feel is amazing!"
+                </p>
+                <div class="testimonial-author">
+                  <div class="author-avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Rajesh Kumar">
+                  </div>
+                  <div class="author-info">
+                    <h4>Rajesh Kumar</h4>
+                    <p>Resident since 2022</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-4">
+              <div class="testimonial-card">
+                <div class="testimonial-rating">★★★★★</div>
+                <p class="testimonial-content">
+                  "As an investor, I appreciate the clear documentation and timely updates. The rental yield from my Lakeside Villa has been excellent.The community feel is amazing"
+                </p>
+                <div class="testimonial-author">
+                  <div class="author-avatar">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=100&q=80" alt="Priya Sharma">
+                  </div>
+                  <div class="author-info">
+                    <h4>Priya Sharma</h4>
+                    <p>Investor & Homeowner</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="col-lg-4">
+              <div class="testimonial-card">
+                <div class="testimonial-rating">★★★★★</div>
+                <p class="testimonial-content">
+                  "The attention to detail in construction quality and finishing is remarkable. Our office at Business Hub has been perfect for our growing team."
+                </p>
+                <div class="testimonial-author">
+                  <div class="author-avatar">
+                    <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80" alt="Amit Patel">
+                  </div>
+                  <div class="author-info">
+                    <h4>Amit Patel</h4>
+                    <p>Business Owner</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer class="site-footer" id="contact">
+        <div class="container">
+          <div class="footer-inner">
+            <div class="row footer-grid g-4">
+              <div class="col-md-4">
+                <div class="footer-brand-title">
+                  <span class="icon">🏠</span>
+                  <h4 class="footer-column-title">Compass Housing</h4>
+                </div>
+                <p class="footer-text">
+                  Creating master-planned communities that balance lifestyle, accessibility, and investment value.
+                </p>
+                <p class="footer-contact-line">
+                  <span class="footer-label">Phone:</span> +91-98765-43210
+                </p>
+                <p class="footer-contact-line">
+                  <span class="footer-label">Address:</span> Compass Square, Financial District<br>
+                  Your City, Country 500001
+                </p>
+
+                <div class="footer-socials">
+                  <a href="http://www.facebook.com" class="footer-social footer-facebook" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                  </a>
+                  <a href="http://www.google.com" class="footer-social footer-google" aria-label="Google">
+                    <i class="fab fa-google"></i>
+                  </a>
+                  <a href="http://www.youtube.com" class="footer-social footer-youtube" aria-label="YouTube">
+                    <i class="fab fa-youtube"></i>
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-md-2 col-sm-6">
+                <h4 class="footer-column-title">Company</h4>
+                <ul class="footer-links">
+                  <li><a href="index.html">Home</a></li>
+                  <li><a href="services.html">Services</a></li>
+                  <li><a href="blog.html">Blog</a></li>
+                  <li><a href="aboutus.html">About us</a></li>
+                  <li><a href="contactus.html">Contact us</a></li>
+                </ul>
+              </div>
+
+              <div class="col-md-2 col-sm-6">
+                <h4 class="footer-column-title">Buyer Desk</h4>
+                <ul class="footer-links">
+                  <li><a href="#">FAQs</a></li>
+                  <li><a href="#">Home Loan Partners</a></li>
+                  <li><a href="#">Site Visit Booking</a></li>
+                  <li><a href="#">Legal &amp; RERA</a></li>
+                  <li><a href="#">Privacy Policy</a></li>
+                </ul>
+              </div>
+
+              <div class="col-md-4">
+                <h4 class="footer-column-title">Project Snapshots</h4>
+                <div class="footer-causes-grid">
+                  <img
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNG5nNLSmMON82KTP72Ri6WREo9apamINs9JE9M4cERa_V_UdDfu2ZOubVQVVLbPFxLEM&usqp=CAU"
+                    alt="Project 1">
+                  <img
+                    src="https://images.unsplash.com/photo-1502005097973-6a7082348e28?auto=format&fit=crop&w=400&q=80"
+                    alt="Project 2">
+                  <img
+                    src="https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=400&q=80"
+                    alt="Project 3">
+                  <img
+                    src="https://www.shutterstock.com/image-photo/house-model-balance-equilibrium-concept-260nw-1822553567.jpg"
+                    alt="Project 4">
+                  <img
+                    src="https://www.shutterstock.com/image-photo/house-model-balance-equilibrium-concept-260nw-1822553567.jpg"
+                    alt="Project 5">
+                  <img
+                    src="https://images.unsplash.com/photo-1502672023488-70e25813eb80?auto=format&fit=crop&w=400&q=80"
+                    alt="Project 6">
+                </div>
+              </div>
+            </div>
+
+            <div class="footer-bottom">
+              © Copyright Compass Housing Society 2024. All rights reserved.
+            </div>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+      const body = document.body;
+      const modeToggle = document.querySelector(".mode-toggle");
+      const modeIcon = document.querySelector(".mode-icon");
+      const storedTheme = localStorage.getItem("compass-theme");
+
+      if (storedTheme === "dark") {
+        body.classList.add("dark-mode");
+        if (modeIcon) modeIcon.textContent = "☀️";
+      } else {
+        if (modeIcon) modeIcon.textContent = "🌙";
+      }
+
+      if (modeToggle) {
+        modeToggle.addEventListener("click", function () {
+          const isDark = body.classList.toggle("dark-mode");
+          if (modeIcon) modeIcon.textContent = isDark ? "☀️" : "🌙";
+          localStorage.setItem("compass-theme", isDark ? "dark" : "light");
+        });
+      }
+
+      const menuToggle = document.querySelector(".menu-toggle");
+      const navMenu = document.querySelector(".nav-menu");
+      const overlay = document.querySelector(".nav-overlay");
+
+      function closeMenu() {
+        if (navMenu) navMenu.classList.remove("nav-open");
+        if (overlay) overlay.classList.remove("active");
+      }
+
+      if (menuToggle && navMenu && overlay) {
+        menuToggle.addEventListener("click", function () {
+          navMenu.classList.toggle("nav-open");
+          overlay.classList.toggle("active");
+        });
+
+        overlay.addEventListener("click", closeMenu);
+      }
+
+      const dropdownItems = document.querySelectorAll(".nav-item.dropdown > .nav-link-custom");
+
+      dropdownItems.forEach(link => {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          const parent = this.parentElement;
+
+          document.querySelectorAll(".nav-item.dropdown.open").forEach(item => {
+            if (item !== parent) {
+              item.classList.remove("open");
+            }
+          });
+
+          parent.classList.toggle("open");
+        });
+      });
+
+      const normalLinks = document.querySelectorAll(".nav-item:not(.dropdown) .nav-link-custom, .nav-item:not(.dropdown) a");
+
+      normalLinks.forEach(l => {
+        l.addEventListener("click", function () {
+          if (window.innerWidth <= 1030) {
+            closeMenu();
+          }
+        });
+      });
+
+      window.addEventListener("resize", () => {
+        if (window.innerWidth > 1030) {
+          closeMenu();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
